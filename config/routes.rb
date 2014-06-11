@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :orders
+
   resources :line_items do
     put 'decrement', on: :member
   end
