@@ -1,4 +1,3 @@
-
 <!-- START:head -->
 <!DOCTYPE html>
 <html>
@@ -13,9 +12,10 @@
 <body class="<%= controller.controller_name %>">
   <div id="banner">
     <%= image_tag("logo.png") %>
-    <%= @page_title || "Pragmatic Bookshelf" %>
+<!-- START_HIGHLIGHT -->
+    <%= @page_title || t('.title') %>
+<!-- END_HIGHLIGHT -->
   </div>
-  
   <div id="columns">
     <div id="side">
       <!-- START:hidden_div -->
@@ -27,12 +27,19 @@
     <!-- END:hidden_div -->
 
       <ul>
-        <li><a href="http://www....">Home</a></li>
-        <li><a href="http://www..../faq">Questions</a></li>
-        <li><a href="http://www..../news">News</a></li>
-        <li><a href="http://www..../contact">Contact</a></li>
-      </ul>
 <!-- START_HIGHLIGHT -->
+        <li><a href="http://www...."><%= t('.home') %></a></li>
+<!-- END_HIGHLIGHT -->
+<!-- START_HIGHLIGHT -->
+        <li><a href="http://www..../faq"><%= t('.questions') %></a></li>
+<!-- END_HIGHLIGHT -->
+<!-- START_HIGHLIGHT -->
+        <li><a href="http://www..../news"><%= t('.news') %></a></li>
+<!-- END_HIGHLIGHT -->
+<!-- START_HIGHLIGHT -->
+        <li><a href="http://www..../contact"><%= t('.contact') %></a></li>
+<!-- END_HIGHLIGHT -->
+      </ul>
 
       <% if session[:user_id] %>
         <ul>
@@ -42,7 +49,6 @@
         </ul>
         <%= button_to 'Logout', logout_path, method: :delete   %>
       <% end %>
-<!-- END_HIGHLIGHT -->
     </div>
     <div id="main">
       <%= yield %>

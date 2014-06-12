@@ -1,4 +1,12 @@
-Rails.application.configure do
+#---
+# Excerpted from "Agile Web Development with Rails",
+# published by The Pragmatic Bookshelf.
+# Copyrights apply to this code. It may not be used to create training material, 
+# courses, books, articles, and the like. Contact us if you are in doubt.
+# We make no guarantees that this code is fit for any purpose. 
+# Visit http://www.pragmaticprogrammer.com/titles/rails4 for more book information.
+#---
+Depot::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -15,35 +23,30 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { :host => 'example.com' }
 
-  config.action_mailer.smtp_settings = {
-    address:  "smtp.gmail.com",
-    port: 578,
-    domain: "example.com",
-    user_name: ENV["USERNAME"],
-    password: ENV["PASSWORD"],
-    enable_starttls_auto: true
-  }
+  # Don't actually send emails
+  config.action_mailer.delivery_method = :test
+  #
+  # Alternate configuration example, using gmail:
+  #   config.action_mailer.delivery_method = :smtp
+  #   config.action_mailer.smtp_settings = {
+  #     address:        "smtp.gmail.com",
+  #     port:           587, 
+  #     domain:         "domain.of.sender.net",
+  #     authentication: "plain",
+  #     user_name:      "dave",
+  #     password:       "secret",
+  #     enable_starttls_auto: true
+  #   } 
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
-  # Raise an error on page load if there are pending migrations.
+  # Raise an error on page load if there are pending migrations
   config.active_record.migration_error = :page_load
 
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
-
-  # Adds additional error checking when serving assets at runtime.
-  # Checks for improperly declared sprockets dependencies.
-  # Raises helpful error messages.
-  config.assets.raise_runtime_errors = true
-
-  # Raises error for missing translations
-  # config.action_view.raise_on_missing_translations = true
 end

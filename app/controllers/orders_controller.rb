@@ -7,6 +7,7 @@
 # Visit http://www.pragmaticprogrammer.com/titles/rails4 for more book information.
 #---
 class OrdersController < ApplicationController
+  skip_before_action :authorize, only: [:new, :create]
   include CurrentCart
   before_action :set_cart, only: [:new, :create]
   before_action :set_order, only: [:show, :edit, :update, :destroy]
@@ -46,14 +47,11 @@ class OrdersController < ApplicationController
       if @order.save
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
-
         OrderNotifier.received(@order).deliver
-    
         format.html { redirect_to store_url, notice: 
           'Thank you for your order.' }
         format.json { render action: 'show', status: :created,
           location: @order }
-      
       else
         format.html { render action: 'new' }
         format.json { render json: @order.errors,
@@ -67,7 +65,6 @@ class OrdersController < ApplicationController
   def update
     respond_to do |format|
       if @order.update(order_params)
-        Notifier.order_shipped(@order).deliver unless @order.ship_date.nil?
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
         format.json { head :no_content }
       else
