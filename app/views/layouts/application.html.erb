@@ -1,3 +1,4 @@
+
 <!-- START:head -->
 <!DOCTYPE html>
 <html>
@@ -10,12 +11,21 @@
 </head>
 <!-- END:head -->
 <body class="<%= controller.controller_name %>">
+<!-- START:i18n -->
   <div id="banner">
-    <%= image_tag("logo.png") %>
 <!-- START_HIGHLIGHT -->
-    <%= @page_title || t('.title') %>
+    <%= form_tag store_path, class: 'locale' do %>
+      <%= select_tag 'set_locale', 
+        options_for_select(LANGUAGES, I18n.locale.to_s),
+        onchange: 'this.form.submit()' %>
+      <%= submit_tag 'submit' %>
+      <%= javascript_tag "$('.locale input').hide()" %>
+    <% end %>
 <!-- END_HIGHLIGHT -->
+    <%= image_tag("logo.png") %>
+    <%= @page_title || t('.title') %>
   </div>
+<!-- END:i18n -->
   <div id="columns">
     <div id="side">
       <!-- START:hidden_div -->
@@ -27,18 +37,10 @@
     <!-- END:hidden_div -->
 
       <ul>
-<!-- START_HIGHLIGHT -->
         <li><a href="http://www...."><%= t('.home') %></a></li>
-<!-- END_HIGHLIGHT -->
-<!-- START_HIGHLIGHT -->
         <li><a href="http://www..../faq"><%= t('.questions') %></a></li>
-<!-- END_HIGHLIGHT -->
-<!-- START_HIGHLIGHT -->
         <li><a href="http://www..../news"><%= t('.news') %></a></li>
-<!-- END_HIGHLIGHT -->
-<!-- START_HIGHLIGHT -->
         <li><a href="http://www..../contact"><%= t('.contact') %></a></li>
-<!-- END_HIGHLIGHT -->
       </ul>
 
       <% if session[:user_id] %>
